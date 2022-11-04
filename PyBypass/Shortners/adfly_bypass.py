@@ -15,7 +15,7 @@ possible subdomains of adf.ly :-
 
 def decrypt_url(code):
     a, b = '', ''
-    for i in range(0, len(code)):
+    for i in range(len(code)):
         if i % 2 == 0: a += code[i]
         else: b = code[i] + b
 
@@ -31,7 +31,7 @@ def decrypt_url(code):
                     i = j					
                     break
         i+=1
-    
+
     key = ''.join(key)
     decrypted = b64decode(key)[16:-16]
 

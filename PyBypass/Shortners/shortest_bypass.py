@@ -15,7 +15,7 @@ subdomains: [cllkme.com, festyy.com, gestyy.com, corneey.com, destyy.com, ceesty
 def shortest_bypass(url: str) -> str:
   
     parsed_url = urlparse(url)
-  
+
     client = requests.Session()
     resp = client.get(url, headers={'referer': url})
     session_id = re.findall('''sessionId(?:\s+)?:(?:\s+)?['|"](.*?)['|"]''', resp.text)[0]
@@ -24,11 +24,9 @@ def shortest_bypass(url: str) -> str:
         'adSessionId': session_id,
         'callback': '_'
     }
-    
+
     time.sleep(5)
     response = client.get(final_url, params=params, headers={'referer': url})
-    dest_url = re.findall('"(.*?)"', response.text)[1].replace('\/','/')
-    
-    return dest_url
+    return re.findall('"(.*?)"', response.text)[1].replace('\/','/')
 
 
