@@ -7,11 +7,11 @@ https?://(uppit\.com/)\S+
 http://uppit.com/qmsn1wnk2g4l
 """
 
-def uppit_bypass(url: str)-> str:
+def uppit_bypass(url: str) -> str:
         
         url = url[:-1] if url[-1] == '/' else url
         token = url.split("/")[-1]
-        
+
         client = requests.Session ()
         headers = {
 
@@ -31,9 +31,13 @@ def uppit_bypass(url: str)-> str:
 
         response = client.post(url, headers=headers, data=data)
         soup = BeautifulSoup(response.text, "html.parser")  
-     
-        download_url= soup.find("span", {'style':'background:#f9f9f9;border:1px dotted #bbb;padding:7px;'}).a.get("href")
-        
-        return download_url 
+
+        return soup.find(
+            "span",
+            {
+                'style':
+                'background:#f9f9f9;border:1px dotted #bbb;padding:7px;'
+            },
+        ).a.get("href") 
 
                    

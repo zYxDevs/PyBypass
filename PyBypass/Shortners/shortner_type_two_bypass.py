@@ -96,19 +96,20 @@ shortner_dict =  {
 def shortner_bypass(shortner_url:str, domain:str, referer:str, sleep_time:int) -> str:
     shortner_url = shortner_url[:-1] if shortner_url[-1] == '/' else shortner_url
     token = shortner_url.split("/")[-1]
- 
-    
+
+
     client = requests.Session()
     response = client.get(domain+token, headers={"referer": referer})
-    
-    soup = BeautifulSoup(response.content, "html.parser")   
+
+    soup = BeautifulSoup(response.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
     data = { input.get('name'): input.get('value') for input in inputs }
-    
+
     time.sleep(sleep_time)
     headers={"x-requested-with": "XMLHttpRequest"}
-    bypassed_url = client.post(domain+"links/go", data=data, headers=headers).json()["url"]
-    return bypassed_url 
+    return client.post(f"{domain}links/go", data=data, headers=headers).json()[
+        "url"
+    ] 
         
  
 def shortner_type_two_bypass(shortner_url: str) ->  str:

@@ -67,12 +67,11 @@ def gen_payload(data, boundary=f'{"-"*6}_'):
 
 
 def appdrive_lookalike(client, drive_link):
-	try:
-		response = client.get(drive_link).text
-		soup = BeautifulSoup(response, "html.parser")
-		new_drive_link = soup.find(class_="btn").get("href")
-		return new_drive_link
-	except: return drive_link
+    try:
+        response = client.get(drive_link).text
+        soup = BeautifulSoup(response, "html.parser")
+        return soup.find(class_="btn").get("href")
+    except: return drive_link
 
 			
 def appdrive_bypass(url: str, appdrive_email=None, appdrive_password=None, drive_id=None,  folder_id=None) -> str:

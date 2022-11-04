@@ -7,10 +7,10 @@ https://userscloud.com/fwd5yscjpot3
 """
 
 def userscloud_bypass(url: str)-> str:
-        
+
         url = url[:-1] if url[-1] == '/' else url
         token = url.split("/")[-1]
-        
+
         client = requests.Session ()
         headers = {
 

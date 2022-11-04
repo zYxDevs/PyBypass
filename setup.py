@@ -25,7 +25,7 @@ pin to an older version of Requests (<2.28).
         )
     )
     sys.exit(1)
-    
+
 #============================================================================================
 
 about = {}
@@ -36,7 +36,7 @@ with open(os.path.join(location, "PyBypass", "__version__.py"), "r") as f:
 
 with open("README.md", "r") as file:
     readme = file.read()
-    
+
 #============================================================================================
 
 
@@ -54,7 +54,7 @@ setup(
     long_description_content_type="text/markdown",
     project_source="https://github.com/sanjit-sinha/PyBypass",
     license=about["__license__"],
-    
+
     packages=setuptools.find_packages(),
     keywords=['bypasser', 'ads', 'shortners', 'filehosters', 'gdtot', 'appdrive', 'shortners'],
     classifiers=[

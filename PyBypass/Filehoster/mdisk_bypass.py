@@ -12,14 +12,12 @@ def mdisk_bypass(url: str) -> str:
     }
     url = url[:-1] if url[-1] == '/' else url
     token = url.split("/")[-1]
-    
-    
+
+
     api = f"https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={token}"
-    
+
     response = requests.get(api, headers=headers).json() 
-        
+
     download_url = response["download"]
-    download_url = download_url.replace(" ", "%20")
-    
-    return download_url
+    return download_url.replace(" ", "%20")
     

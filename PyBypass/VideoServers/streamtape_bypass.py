@@ -14,9 +14,8 @@ Note: Bypassed url only open/download with the ip of machine you are working on
 
 """
 
-def streamtape_bypass( url:str)-> str:
+def streamtape_bypass( url:str) -> str:
     response = requests.get(url)
 
     if (videolink := re.findall(r"document.*((?=id\=)[^\"']+)", response.text)):
-        nexturl = "https://streamtape.com/get_video?" + videolink[-1]
-        return nexturl
+        return f"https://streamtape.com/get_video?{videolink[-1]}"

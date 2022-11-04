@@ -13,11 +13,11 @@ https://1fichier.com/?plpf4551k7lnlp411ujy
 def fichier_bypass(url:str) -> str:
 	client = requests.Session()
 	response = client.get(url)
-	
+
 	soup = BeautifulSoup(response.text, "html.parser")
 	data = {"adz": soup.find("input").get("value")}
-	
-	
+
+
 	rate_limit = soup.find("div", {"class": "ct_warn"})
 	if "you must wait" in str(rate_limit).lower():
 		try:
@@ -29,8 +29,7 @@ def fichier_bypass(url:str) -> str:
 	else:
 		r = client.post(url, json=data)
 		soup = BeautifulSoup(r.text, "html.parser")
-		download_url = soup.find(class_="ok btn-general btn-orange").get("href")
-		return download_url 
+		return soup.find(class_="ok btn-general btn-orange").get("href") 
 
 		
 

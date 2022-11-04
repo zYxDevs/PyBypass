@@ -11,8 +11,10 @@ def shortly_bypass(shortly_url: str) -> str:
 	token = shortly_url.split("/")[-1]
 
 	shortly_bypass_api = "https://www.shortly.xyz/getlink.php/"
-	response = requests.post(shortly_bypass_api, data={"id":token}, headers={"referer":"https://www.shortly.xyz/link"}).text
-	
-	return response
+	return requests.post(
+		shortly_bypass_api,
+		data={"id": token},
+		headers={"referer": "https://www.shortly.xyz/link"},
+	).text
 	
 	

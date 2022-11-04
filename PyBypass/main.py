@@ -34,7 +34,7 @@ class UnableToBypassError(Exception):
 
 		
 def _requiredvaluechecker(function):
-	
+
 	"""
 	a decorator to check if required parameters is/are present or not  to bypass 
 	the given links
@@ -43,28 +43,31 @@ def _requiredvaluechecker(function):
 	def wrapper_function(*args, **kwargs):
 		
 		func_name = args[-1]
-		if func_name == "gdtot_bypass":	
-			if ("gdtot_crypt" in kwargs) == False:
-				raise RequiredValueNotFoundError(" Missing required parameter 'gdtot_crypt'. please enter yout GDOT crypt value")
-			
-				
-		if func_name =="appdrive_bypass":	
-			if all([("appdrive_email" in kwargs ), ("appdrive_password" in kwargs)])== False:	
-				raise RequiredValueNotFoundError("Missing required parameter 'appdrive_email' and 'appdrive_password. please enter yout appdrive credential value to bypass the given link.")
-				
-				
-		if func_name =="hubdrive_bypass":			
-			if ("hubdrive_crypt" in kwargs) == False:
-				raise RequiredValueNotFoundError(" Missing required parameter 'hubdrive_crypt'. please enter your hubdrive crypt value")
-		
-				
-		if func_name =="sharerpw_bypass":			
-			if all([("sharerpw_xsrf_token" in kwargs ), ("sharerpw_larvel_session" in kwargs)])== False:	
-				raise RequiredValueNotFoundError("Missing required parameter 'sharerpw_xsrf_token' and 'sharerpw_larvel_session. please enter yout sharer.pw credential value to bypass the given link.")	
-		
+		if func_name == "gdtot_bypass" and "gdtot_crypt" not in kwargs:
+			raise RequiredValueNotFoundError(" Missing required parameter 'gdtot_crypt'. please enter yout GDOT crypt value")
+
+
+		if func_name == "appdrive_bypass" and not all(
+			[("appdrive_email" in kwargs), ("appdrive_password" in kwargs)]
+		):
+			raise RequiredValueNotFoundError("Missing required parameter 'appdrive_email' and 'appdrive_password. please enter yout appdrive credential value to bypass the given link.")
+
+
+		if func_name == "hubdrive_bypass" and "hubdrive_crypt" not in kwargs:
+			raise RequiredValueNotFoundError(" Missing required parameter 'hubdrive_crypt'. please enter your hubdrive crypt value")
+
+
+		if func_name == "sharerpw_bypass" and not all(
+			[
+				("sharerpw_xsrf_token" in kwargs),
+				("sharerpw_larvel_session" in kwargs),
+			]
+		):
+			raise RequiredValueNotFoundError("Missing required parameter 'sharerpw_xsrf_token' and 'sharerpw_larvel_session. please enter yout sharer.pw credential value to bypass the given link.")	
+
 		value = function(*args, **kwargs)
 		return value	
-		
+
 	return wrapper_function
 
 
@@ -77,21 +80,19 @@ class PyBypass:
 	@_requiredvaluechecker
 	def redirect_function(self, url, bypasser_function, **kwargs):
 		
-		parameter = ""
-		for (key,values) in kwargs.items():
-			parameter += f" ,{key}='{values}' "
+		parameter = "".join(f" ,{key}='{values}' " for key, values in kwargs.items())
 		parameter = parameter.strip()
-	
+
 
 		try:
-			bypassed_value = eval(bypasser_function + f"('{url}'{parameter})")
+			bypassed_value = eval(f"{bypasser_function}('{url}'{parameter})")
 		except Exception as e:
 			print(e)
 			raise UnableToBypassError("Can not bypass the given url. possible reason can be wrong link, wrong parameters or script is patched")
-	
-		
-		if bypassed_value == None:
-		    raise UnableToBypassError("Can not bypass the given url. possible reason can be wrong link, wrong parameters or script is patched")
+
+
+		if bypassed_value is None:
+			raise UnableToBypassError("Can not bypass the given url. possible reason can be wrong link, wrong parameters or script is patched")
 		return bypassed_value
 		 
 		 
